@@ -11,8 +11,8 @@ class AssistantController {
     async createSession() {
         console.log('Create session method invoked..')
         try {
-            let { session_id } = await this.assistant.createSession({
-                assistant_id: env.assistant.assistant_id
+            let { result: { session_id: session_id } } = await this.assistant.createSession({
+                assistantId: env.assistant.assistant_id
             })
             console.log('Session id: ' + session_id)
             return session_id
@@ -23,25 +23,26 @@ class AssistantController {
     }
 
     async AssistantOptions(params) {
-        if (!params.session_id || params.session_id == '') {
-            try {
-                let session_id = await this.createSession()
-                params.session_id = session_id
-            } catch (err) {
-                throw new Error(err)
-            }
-        }
+        // if (!params.session_id || params.session_id == '') {
+        //     try {
+        //         let session_id = await this.createSession()
+        //         console.log(session_id)
+        //         params.session_id = session_id
+        //     } catch (err) {
+        //         throw new Error(err)
+        //     }
+        // }
         return {
-            assistant_id: env.assistant.assistant_id,
-            session_id: params.session_id,
+            workspaceId: env.assistant.workspaceId,
+            // sessionId: params.session_id,
             input: {
-                'message_type': params.message.type,
+                // 'message_type': params.message.type,
                 'text': params.message.value || ' ',
-                'options': {
-                    'return_context': true
-                }
+                // 'options': {
+                // 'return_context': true
+                // },
             },
-            context: params.context || {}
+            context: params.context || {},
         }
 
     }
@@ -53,8 +54,10 @@ class AssistantController {
         try {
             let messageOptions = await this.AssistantOptions(params)
             try {
+                console.log(JSON.stringify(messageOptions, null, 2))
                 let response = await this.assistant.message(messageOptions)
-                response.session_id = params.session_id
+                console.log(JSON.stringify(response, null, 2))
+                // response.result.session_id = messageOptions.sessionId
                 return response
             } catch (err) {
                 let error = JSON.parse(err.body)

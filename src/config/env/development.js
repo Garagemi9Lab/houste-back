@@ -7,5 +7,6 @@ export default ({
         iam_apikey: process.env.assistantApikey,
         url: process.env.assistantURL,
         assistant_id: process.env.assistantID,
+        workspaceId: process.env.workspaceId,
     }
 })
