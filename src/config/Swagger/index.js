@@ -122,7 +122,7 @@ export default {
         }
     },
     'host': 'https://houste-backend.mybluemix.net',
-    'basePath': '/api/v1',
+    'basePath': '/api/v1/web',
     'schemes': [
         'https'
     ]
