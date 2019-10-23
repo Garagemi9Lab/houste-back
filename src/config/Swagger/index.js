@@ -121,8 +121,8 @@ export default {
             }
         }
     },
-    'host': 'virtserver.swaggerhub.com',
-    'basePath': '/RabahZein/Houste/1.0.0',
+    'host': 'https://houste-backend.mybluemix.net',
+    'basePath': '/api/v1',
     'schemes': [
         'https'
     ]
