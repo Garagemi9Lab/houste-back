@@ -6,9 +6,16 @@ import errorhandler from 'errorhandler'
 import morgan from 'morgan'
 import chalk from 'chalk'
 import { env, corsOptions } from './config'
+
+import * as SwaggerUI from 'swagger-ui-express'
+import SwaggerDocument from './config/Swagger/swagger'
+
 import {
     web
 } from './routers'
+
+
+
 
 var app = express()
 
@@ -25,6 +32,8 @@ if (env.NODE_ENV === 'development') {
 const BASE_PATH = '/api/v1'
 
 app.use(`${BASE_PATH}/web`, web)
+
+app.use(`${BASE_PATH}/swagger`, SwaggerUI.serve, SwaggerUI.setup(SwaggerDocument))
 
 app.listen(app.get('PORT'), () => {
     /* eslint-disable no-console */
