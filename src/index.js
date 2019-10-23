@@ -8,7 +8,7 @@ import chalk from 'chalk'
 import { env, corsOptions } from './config'
 
 import * as SwaggerUI from 'swagger-ui-express'
-import SwaggerDocument from './config/Swagger/swagger'
+import SwaggerDocument from './config/Swagger'
 
 import {
     web
