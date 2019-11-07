@@ -11,6 +11,9 @@ const initRouter = () => {
     router.route('/message/:place')
         .post(message)
 
+    router.route('/message')
+        .post(message)
+
     return router
 }
 
@@ -28,11 +31,9 @@ const login = async (req, res) => {
 const message = async (req, res) => {
     const params = req.body
     const place = req.params.place
-    if (!params.context) params.context = {}
-    if (!params.context.LOCAL) params.context.LOCAL = place.replace(new RegExp(/_/g), ' ')
-    // if (!params.context.skills['main skill']) params.context.skills['main skill'] = {}
-    // if (!params.context.skills['main skill'].user_defined) params.context.skills['main skill'].user_defined = {}
-    // if (!params.context.skills['main skill'].user_defined.LOCAL) params.context.skills['main skill'].user_defined.LOCAL = place
+    if (!params.context || params.message.firstMessage) params.context = {}
+    if (!params.context.LOCAL && place) params.context.LOCAL = place.replace(new RegExp(/_/g), ' ')
+
     let messageController = new MessagesController()
     try {
         let response = await messageController.send(params)
